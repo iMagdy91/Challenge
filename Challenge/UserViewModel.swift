@@ -7,3 +7,22 @@
 //
 
 import Foundation
+
+
+class UserViewModel {
+    
+    var name: String?
+    var username: String?
+    var email: String?
+    var address: String?
+    var id: Int?
+    
+    init(name : String?, username: String?, email: String?, address: String?, id: Int?) {
+        self.name = name
+        self.username = username
+        self.email = email
+        self.address = address
+        self.id = id
+    }
+    
+}

@@ -7,3 +7,11 @@
 //
 
 import Foundation
+
+
+struct NetworkStruct {
+    
+    static let baseURL = "https://jsonplaceholder.typicode.com/"
+    static let userPath = "users"
+    static let postPath = "posts?userId=%@"
+}

@@ -10,6 +10,11 @@ import UIKit
 
 class PostsTableViewCell: UITableViewCell {
 
+    
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var bodyLabel: UILabel!
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -21,4 +26,9 @@ class PostsTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
 
+    func customizeCellWithModel(model: PostViewModel?) {
+        titleLabel.text = model?.title
+        bodyLabel.text = model?.body
+    }
+    
 }

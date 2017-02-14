@@ -21,6 +21,12 @@ class BaseViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    func handleError(error: Error) {
+        let alertController = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
+        alertController.addAction(okAction)
+        present(alertController, animated: true, completion: nil)
+    }
 
     /*
     // MARK: - Navigation

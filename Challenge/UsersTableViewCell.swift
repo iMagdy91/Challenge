@@ -10,6 +10,12 @@ import UIKit
 
 class UsersTableViewCell: UITableViewCell {
 
+    
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var usernameLabel: UILabel!
+    @IBOutlet weak var emailLabel: UILabel!
+    @IBOutlet weak var addressLabel: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -21,4 +27,11 @@ class UsersTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
 
+    func customizeCellWithModel(model: UserViewModel?) {
+        nameLabel.text = model?.name
+        usernameLabel.text = model?.username
+        emailLabel.text = model?.email
+        addressLabel.text = model?.address
+    }
+    
 }
