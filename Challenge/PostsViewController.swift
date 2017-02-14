@@ -7,18 +7,65 @@
 //
 
 import UIKit
+import MBProgressHUD
 
-class PostsViewController: BaseViewController {
+class PostsViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource {
 
+    /* instance variables */
+    var userID: String?
+    private var posts: [PostViewModel]?
+    
+    /* private outlets */
+    @IBOutlet private weak var tableView: UITableView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        title = userID
+        tableView.estimatedRowHeight = 70.0
+        tableView.rowHeight = UITableViewAutomaticDimension
+        getPosts()
         // Do any additional setup after loading the view.
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    //MARK: - Private Methods
+    private func getPosts() {
+        if let id = userID {
+            MBProgressHUD.showAdded(to: view, animated: true)
+            PostStore.getPostsForUser(userID: id, success: { [weak self](model) in
+                guard let strongSelf = self else { return }
+                MBProgressHUD.hide(for: strongSelf.view, animated: true)
+                strongSelf.posts = model
+                strongSelf.tableView.reloadData()
+            }, failure: { [weak self](error) in
+                guard let strongSelf = self else { return }
+                MBProgressHUD.hide(for: strongSelf.view, animated: true)
+                strongSelf.handleError(error: error)
+            })
+
+        }
+        
+        
+    }
+    
+    //MARK UITableViewDataSource Methods
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return posts?.count ?? 0
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let identifier = "Posts Cell"
+        var cell = tableView.dequeueReusableCell(withIdentifier: identifier) as? PostsTableViewCell
+        if cell == nil {
+            cell = PostsTableViewCell.init(style: .default, reuseIdentifier:identifier)
+        }
+        cell!.customizeCellWithModel(model: posts?[indexPath.row])
+        
+        return cell!
     }
     
 
